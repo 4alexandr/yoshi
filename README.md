@@ -432,3 +432,4 @@ Next time you'll run `yoshi lint`, this command will execute and only then the l
 - [How to use SVG](docs/faq/SVG.md)
 - [Moment.js locales are missing](docs/faq/MOMENT_OPTIMIZATION.md)
 - [How do I add automatic AB tests to textual content?](docs/faq/AB_TRANSLATE.md)
+
