@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import { beforeAndAfter, app } from '../environment';
+import { startTestApp } from '../environment';
 import './e2e-common';
 
 describe('React application', () => {
-  beforeAndAfter();
+  const app = startTestApp();
 
   describe('open page', () => {
     it('should display title', async () => {

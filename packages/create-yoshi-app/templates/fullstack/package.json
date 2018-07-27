@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start",
+    "start": "yoshi start --entry-point=./dist/test/start.js",
     "precommit": "yoshi lint",
     "pretest": "yoshi build",
     "test": "yoshi test",
@@ -27,6 +27,8 @@
     "react-i18next": "~4.6.0",
     "regenerator-runtime": "^0.11.0",
     "wix-axios-config": "latest",
+    "wix-bootstrap-greynode": "latest",
+    "wix-bootstrap-hadron": "latest",
     "wix-bootstrap-ng": "latest",
     "wix-express-csrf": "latest",
     "wix-express-require-https": "latest",
@@ -42,6 +44,8 @@
     "puppeteer": "^1.1.0",
     "wix-bootstrap-testkit": "latest",
     "wix-config-emitter": "latest",
+    "wix-greynode-testkit": "latest",
+    "wix-hadron-testkit": "latest",
     "yoshi": "^3.0.0",
     "yoshi-style-dependencies": "^3.0.0"
   },
