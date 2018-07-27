@@ -1,17 +1,49 @@
 import * as testkit from 'wix-bootstrap-testkit';
+import * as greynodeTestkit from 'wix-greynode-testkit';
+import * as hadronTestkit from 'wix-hadron-testkit';
 import * as configEmitter from 'wix-config-emitter';
 
-export const app = bootstrapServer();
+const greynode = greynodeTestkit([]);
+const baseStaticLocalPath = 'statics/';
+const staticArtifacts = [];
+const hadron = hadronTestkit(staticArtifacts, greynode, baseStaticLocalPath);
 
-export function beforeAndAfter() {
-  before(() => emitConfigs());
-  app.beforeAndAfter();
+export async function startApp() {
+  const app = bootstrapServer({
+    env: {
+      APP_CONF_DIR: './target/configs/start/',
+    },
+  });
+
+  await startServices(app);
+  await app.start();
+  return app;
 }
 
-function emitConfigs() {
+export function startTestApp() {
+  const app = bootstrapServer({
+    env: {
+      PORT: 3100,
+      MANAGEMENT_PORT: 3104,
+      NEW_RELIC_LOG_LEVEL: 'warn',
+      APP_CONF_DIR: './target/configs/test/',
+    },
+  });
+
+  beforeAndAfter(app);
+  return app;
+}
+
+function beforeAndAfter(app) {
+  before(() => startServices(app));
+  app.beforeAndAfter();
+  after(() => stopServices());
+}
+
+function emitConfigs(app) {
   return configEmitter({
     sourceFolders: ['./templates'],
-    targetFolder: './target/configs',
+    targetFolder: app.env.APP_CONF_DIR,
   })
     .fn('scripts_domain', 'static.parastorage.com')
     .fn(
@@ -22,13 +54,19 @@ function emitConfigs() {
     .emit();
 }
 
-function bootstrapServer() {
-  return testkit.app('./index', {
-    env: {
-      PORT: 3100,
-      MANAGEMENT_PORT: 3104,
-      NEW_RELIC_LOG_LEVEL: 'warn',
-      DEBUG: '',
-    },
-  });
+function startServices(app) {
+  return emitConfigs(app)
+    .then(() => greynode.start())
+    .then(() => greynode.emitConfig(app.env.APP_CONF_DIR))
+    .then(() => hadron.start());
+}
+
+function stopServices() {
+  return Promise.resolve()
+    .then(() => hadron.stop())
+    .then(() => greynode.stop());
+}
+
+function bootstrapServer(config) {
+  return testkit.app('./index', config);
 }
