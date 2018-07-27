@@ -3,7 +3,7 @@ import greynodeTestkit from 'wix-greynode-testkit';
 import hadronTestkit from 'wix-hadron-testkit';
 import configEmitter from 'wix-config-emitter';
 
-const greynode = greynodeTestkit([];
+const greynode = greynodeTestkit([]);
 const baseStaticLocalPath = 'statics/';
 const staticArtifacts = [];
 const hadron = hadronTestkit(staticArtifacts, greynode, baseStaticLocalPath);
