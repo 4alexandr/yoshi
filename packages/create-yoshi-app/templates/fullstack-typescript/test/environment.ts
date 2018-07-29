@@ -21,6 +21,7 @@ export function build(type) {
   const app = testkit.server('./index', {
     timeout: 60000,
     env: {
+      SRC_PATH: './dist/src',
       PORT: port,
       MANAGEMENT_PORT: port + 4,
       NEW_RELIC_LOG_LEVEL: 'warn',
