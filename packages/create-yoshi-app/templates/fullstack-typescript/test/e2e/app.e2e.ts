@@ -1,16 +1,17 @@
 import { expect } from 'chai';
-import { startTestApp } from './../environment';
-import './e2e-common';
+import { env } from './e2e-common';
 
 describe('React application', () => {
-  const app = startTestApp();
 
   describe('open page', () => {
+
     it('should display title', async () => {
       const page = await browser.newPage();
-      await page.goto(app.getUrl('/'));
+      await page.goto(env.app.getUrl('/'));
       await page.waitForSelector('h2', { timeout: 1000 });
       expect(await page.$eval('h2', e => e.innerText)).to.equal('Hello World!');
     });
+
   });
+
 });
