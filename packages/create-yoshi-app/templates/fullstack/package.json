@@ -8,7 +8,7 @@
     "email": "{%authorEmail%}"
   },
   "scripts": {
-    "start": "yoshi start --entry-point=./dist/test/start.js",
+    "start": "yoshi start --entry-point=./dist/test/start.js --manual-restart",
     "precommit": "yoshi lint",
     "pretest": "yoshi build",
     "test": "yoshi test",
